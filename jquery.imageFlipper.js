@@ -51,9 +51,13 @@
 
   function setMouseMoves(that, images, opts) {
     var w = parseInt($(that.container).width());    
-    $(that.container).mousemove(function(e) {
+  $(that.container).bind('touchmove mousemove touch',function(e) {
       var x = e.pageX - this.offsetLeft;
       var y = e.pageY - this.offsetTop;
+      if (isNaN(x) || (x === 0 && y === 0)){
+        x = e.originalEvent.touches[0].pageX;
+        y = e.originalEvent.touches[0].pageY;
+      }
       var num = Math.ceil(x / w * (images.length)) - 1;
       if (num < 0) {
         num = 0;
