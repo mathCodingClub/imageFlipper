@@ -47,33 +47,32 @@
     // save data
     $(this.container).data('imageFlipper', this.images);
     setMouseMoves(this, images, opts);
+  }
 
-    function setMouseMoves(that, images, opts) {
-      var w = parseInt($(that.container).width());
-      console.log(that.container);
-      $(that.container).mousemove(function(e) {
-        var x = e.pageX - this.offsetLeft;
-        var y = e.pageY - this.offsetTop;
-        var num = Math.ceil(x / w * (images.length)) - 1;
-        if (num < 0) {
-          num = 0;
+  function setMouseMoves(that, images, opts) {
+    var w = parseInt($(that.container).width());    
+    $(that.container).mousemove(function(e) {
+      var x = e.pageX - this.offsetLeft;
+      var y = e.pageY - this.offsetTop;
+      var num = Math.ceil(x / w * (images.length)) - 1;
+      if (num < 0) {
+        num = 0;
+      }
+      if (num >= images.length) {
+        num = images.length - 1;
+      }
+      if ('onChange' in opts) {
+        // give to be shown (based on computation of numbers), hidden, index of new, x coordinate, y coordinate
+        that.visible = opts.onChange(that.images[num], that.visible, num, x, y);
+      }
+      else {
+        if (that.visible !== null) {
+          $(that.visible).css({'visibility': 'hidden'});
         }
-        if (num >= images.length) {
-          num = images.length - 1;
-        }
-        if ('onChange' in opts) {
-          // give to be shown (based on computation of numbers), hidden, index of new, x coordinate, y coordinate
-          that.visible = opts.onChange(that.images[num], that.visible, num, x, y);
-        }
-        else {
-          if (that.visible !== null){
-           $(that.visible).css({'visibility': 'hidden'});
-          }
-          $(that.images[num]).css({'visibility': 'visible'});
-          that.visible = that.images[num];
-        }
-      });
-    }
+        $(that.images[num]).css({'visibility': 'visible'});
+        that.visible = that.images[num];
+      }
+    });
   }
 
 }(jQuery));
