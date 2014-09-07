@@ -8,8 +8,8 @@
   <body>
 
     <!-- it is not possible to combine perspective and border-radius, needs to elements -->
-    <span style="font-family: monospace, courier-new, courier;">Rotation</span>
-    <div style="height: 600px; width: 850px;
+    <span style="font-family: monospace, courier-new, courier;">Change figure when mouse moves</span>
+    <div style="height: 563px; width: 750px;
          border: 1px solid rgb(200,200,200); 
          border-radius: 5px; 
           margin-bottom: 30px;
@@ -22,7 +22,7 @@
 
     <!-- another container where the image moves -->
     <span style="font-family: monospace, courier-new, courier;">Move along mouse</span>
-    <div style="height: 600px; width: 850px;         
+    <div style="height: 563px; width: 650px;         
          border: 1px solid rgb(200,200,200); 
          border-radius: 5px; 
          overflow: hidden;">
@@ -42,39 +42,22 @@
         }).done(function(data) {
 
           // EXAMPLE 1
-
-          // define some extra css for all the images
-          var imageCss = function(img, ind) {
-            $(img).css({'-webkit-transform': 'rotate3d(1, 1, 0.2, ' + ((-data.length + ind * 2) / 3.4) + 'deg)',
-              'border-radius': 5,
-              'top': -75,
-              'left': -75,
-              'height': 750,
-              'width': 1000});
-          };
           // init image flipper
-          $('#container').imageFlipper(data,          
-                  {
-                    path: 'figs/',
-                    imageCss: imageCss
-                  }
-          );          
+          $('#container').imageFlipper(data,{path: 'figs/'});          
           // EXAMPLE 2
-
-          // define another container
-          var imageCss2 = function(img, ind) {
-            $(img).css({'border-radius': 5,
-              'top': -75,
-              'left': -ind/(data.length-1)*150,
-              'height': 750,
-              'width': 1000});
+          
+          // change image position 
+          var imageCss = function(img, ind) {
+            $(img).css({left: -ind/(data.length-1)*100,
+              height: 563,
+              width: 750});
           };
 
           // init image flipper
           $('#container2').imageFlipper(data,
                   {
                     path: 'figs/',
-                    imageCss: imageCss2
+                    imageCss: imageCss
                   }
           );
 
