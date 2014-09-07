@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <meta charset='utf-8'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../jquery.imageFlipper.js"></script>
+  </head>
+  <body>
+
+    <!-- it is not possible to combine perspective and border-radius, needs to elements -->
+    <span style="font-family: monospace, courier-new, courier;">Rotation</span>
+    <div style="height: 600px; width: 850px;
+         border: 1px solid rgb(200,200,200); 
+         border-radius: 5px; 
+          margin-bottom: 30px;
+         overflow: hidden;">
+      <div style="height: inherit; width: inherit;          
+           -webkit-perspective: 800;           
+           position: relative;" id="container">
+      </div>
+    </div>
+
+    <!-- another container where the image moves -->
+    <span style="font-family: monospace, courier-new, courier;">Move along mouse</span>
+    <div style="height: 600px; width: 850px;         
+         border: 1px solid rgb(200,200,200); 
+         border-radius: 5px; 
+         overflow: hidden;">
+      <div style="height: inherit; width: inherit;          
+           -webkit-perspective: 800;           
+           position: relative;" id="container2">
+      </div>
+    </div>
+
+    <script>
+
+      $(document).ready(function() {
+        
+        $.ajax({
+          url: 'figs/fetch.php',
+          method: 'get'
+        }).done(function(data) {
+
+          // EXAMPLE 1
+
+          // define some extra css for all the images
+          var imageCss = function(img, ind) {
+            $(img).css({'-webkit-transform': 'rotate3d(1, 1, 0.2, ' + ((-data.length + ind * 2) / 3.4) + 'deg)',
+              'border-radius': 5,
+              'top': -75,
+              'left': -75,
+              'height': 750,
+              'width': 1000});
+          };
+          // init image flipper
+          $('#container').imageFlipper(data,          
+                  {
+                    path: 'figs/',
+                    imageCss: imageCss
+                  }
+          );          
+          // EXAMPLE 2
+
+          // define another container
+          var imageCss2 = function(img, ind) {
+            $(img).css({'border-radius': 5,
+              'top': -75,
+              'left': -ind/(data.length-1)*150,
+              'height': 750,
+              'width': 1000});
+          };
+
+          // init image flipper
+          $('#container2').imageFlipper(data,
+                  {
+                    path: 'figs/',
+                    imageCss: imageCss2
+                  }
+          );
+
+        });
+      });
+
+    </script>
+
+
+  </body>
+</html>
