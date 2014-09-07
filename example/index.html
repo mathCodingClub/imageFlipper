@@ -9,10 +9,10 @@
 
     <!-- it is not possible to combine perspective and border-radius, needs to elements -->
     <span style="font-family: monospace, courier-new, courier;">Change figure when mouse moves</span>
-    <div style="height: 563px; width: 750px;
+    <div style="height: 563px; width: 650px;
          border: 1px solid rgb(200,200,200); 
          border-radius: 5px; 
-          margin-bottom: 30px;
+         margin-bottom: 30px;
          overflow: hidden;">
       <div style="height: inherit; width: inherit;          
            -webkit-perspective: 800;           
@@ -35,7 +35,7 @@
     <script>
 
       $(document).ready(function() {
-        
+
         $.ajax({
           url: 'figs/fetch.php',
           method: 'get'
@@ -43,12 +43,15 @@
 
           // EXAMPLE 1
           // init image flipper
-          $('#container').imageFlipper(data,{path: 'figs/'});          
+          var moveImage = function(img, ind) {
+            $(img).css({left: -50});
+          };
+          $('#container').imageFlipper(data, {path: 'figs/', imageCss: moveImage});
           // EXAMPLE 2
-          
+
           // change image position 
           var imageCss = function(img, ind) {
-            $(img).css({left: -ind/(data.length-1)*100,
+            $(img).css({left: -ind / (data.length - 1) * 100,
               height: 563,
               width: 750});
           };
